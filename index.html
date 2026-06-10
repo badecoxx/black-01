@@ -393,6 +393,149 @@ a{color:#1675ff;text-decoration:none}
     .feature-grid{grid-template-columns:1fr 1fr}
 }
 
+
+.reviews,
+.questions{
+    background:#fff;
+    margin-top:18px;
+    padding:28px;
+    border:1px solid #ddd;
+    border-radius:6px;
+}
+.reviews h2,
+.questions h2{
+    font-size:28px;
+    font-weight:400;
+    margin:0 0 24px;
+}
+.rating-summary{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:24px;
+    align-items:center;
+    border-bottom:1px solid #eee;
+    padding-bottom:24px;
+    margin-bottom:12px;
+}
+.rating-number{
+    font-size:64px;
+    font-weight:400;
+    line-height:1;
+}
+.rating-stars{
+    color:#3483fa;
+    font-size:22px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+}
+.rating-bars{
+    max-width:340px;
+    margin-top:12px;
+}
+.rating-bar{
+    display:grid;
+    grid-template-columns:44px 1fr 38px;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    color:#666;
+    margin:5px 0;
+}
+.rating-line{
+    height:7px;
+    border-radius:20px;
+    background:#e5e5e5;
+    overflow:hidden;
+}
+.rating-line span{
+    display:block;
+    height:100%;
+    background:#3483fa;
+}
+.review-card{
+    border-bottom:1px solid #eee;
+    padding:18px 0;
+}
+.review-card:last-child{border-bottom:0}
+.review-top{
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    align-items:flex-start;
+    margin-bottom:8px;
+}
+.review-name{
+    font-weight:bold;
+}
+.review-date{
+    color:#777;
+    font-size:13px;
+}
+.review-stars{
+    color:#3483fa;
+    letter-spacing:1px;
+    margin:5px 0 8px;
+}
+.review-card p{
+    margin:0;
+    line-height:1.5;
+    color:#444;
+}
+.review-helpful{
+    margin-top:12px;
+    color:#777;
+    font-size:13px;
+}
+.question-box{
+    border-bottom:1px solid #eee;
+    padding:18px 0;
+}
+.question-box:last-child{border-bottom:0}
+.question-text{
+    font-size:16px;
+    margin-bottom:10px;
+}
+.answer-text{
+    color:#555;
+    line-height:1.5;
+    padding-left:18px;
+    border-left:3px solid #eee;
+}
+.question-form{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+}
+.question-form input{
+    flex:1;
+    border:1px solid #ddd;
+    border-radius:6px;
+    padding:13px;
+    font-size:15px;
+}
+.question-form button{
+    border:0;
+    border-radius:6px;
+    background:#3483fa;
+    color:white;
+    padding:0 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.question-alert{
+    display:none;
+    background:#e7f4ff;
+    color:#1259a8;
+    padding:12px;
+    border-radius:6px;
+    margin-bottom:12px;
+}
+@media(max-width:700px){
+    .rating-summary{grid-template-columns:1fr}
+    .question-form{flex-direction:column}
+    .question-form button{padding:13px}
+}
+
 @media(max-width:1000px){
 .card{grid-template-columns:1fr}
 .gallery-sticky{display:block;transform:none!important}
@@ -611,6 +754,106 @@ a{color:#1675ff;text-decoration:none}
     <div class="description-box">
       <h3>Descrição</h3>
       <p>Produto recondicionado em bom estado, testado para garantir funcionamento. Pode apresentar pequenas marcas de uso, mantendo tela sem detalhes importantes e bateria com mais de 80% de capacidade.</p>
+    </div>
+  </section>
+
+
+  <section class="reviews" id="avaliacoes">
+    <h2>Opiniões sobre o produto</h2>
+
+    <div class="rating-summary">
+      <div class="rating-number">4.8</div>
+      <div>
+        <div class="rating-stars">★★★★★</div>
+        <p>Baseado em 1.247 avaliações</p>
+
+        <div class="rating-bars">
+          <div class="rating-bar"><span>5 ★</span><div class="rating-line"><span style="width:86%"></span></div><span>86%</span></div>
+          <div class="rating-bar"><span>4 ★</span><div class="rating-line"><span style="width:10%"></span></div><span>10%</span></div>
+          <div class="rating-bar"><span>3 ★</span><div class="rating-line"><span style="width:3%"></span></div><span>3%</span></div>
+          <div class="rating-bar"><span>2 ★</span><div class="rating-line"><span style="width:1%"></span></div><span>1%</span></div>
+          <div class="rating-bar"><span>1 ★</span><div class="rating-line"><span style="width:0%"></span></div><span>0%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div>
+          <div class="review-name">Carlos Henrique</div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-date">há 2 semanas</div>
+      </div>
+      <p>Chegou bem embalado e antes do prazo. O celular veio bonito, funcionando certinho e a bateria está durando bem.</p>
+      <div class="review-helpful">👍 42 pessoas acharam útil</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div>
+          <div class="review-name">Mariana Souza</div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-date">há 1 mês</div>
+      </div>
+      <p>Comprei para meu filho. Aparelho rápido, câmera boa e com aparência muito melhor do que eu esperava.</p>
+      <div class="review-helpful">👍 31 pessoas acharam útil</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div>
+          <div class="review-name">José Roberto</div>
+          <div class="review-stars">★★★★☆</div>
+        </div>
+        <div class="review-date">há 1 mês</div>
+      </div>
+      <p>Tem pequenas marcas de uso, mas nada que atrapalhe. Pelo preço valeu muito a pena.</p>
+      <div class="review-helpful">👍 18 pessoas acharam útil</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-top">
+        <div>
+          <div class="review-name">Ana Cláudia</div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <div class="review-date">há 2 meses</div>
+      </div>
+      <p>Estou usando todos os dias e não tive problema. Face ID, tela e câmera funcionando normalmente.</p>
+      <div class="review-helpful">👍 27 pessoas acharam útil</div>
+    </div>
+  </section>
+
+  <section class="questions" id="perguntas">
+    <h2>Perguntas e respostas</h2>
+
+    <div class="question-alert" id="question-alert">Pergunta enviada! Em breve responderemos.</div>
+
+    <div class="question-form">
+      <input type="text" id="question-input" placeholder="Escreva sua pergunta...">
+      <button onclick="enviarPergunta()">Perguntar</button>
+    </div>
+
+    <div class="question-box">
+      <div class="question-text"><strong>Pergunta:</strong> O aparelho é desbloqueado?</div>
+      <div class="answer-text"><strong>Resposta:</strong> Sim, funciona com qualquer operadora.</div>
+    </div>
+
+    <div class="question-box">
+      <div class="question-text"><strong>Pergunta:</strong> A bateria está boa?</div>
+      <div class="answer-text"><strong>Resposta:</strong> Sim, todos os aparelhos são testados e possuem mais de 80% de capacidade.</div>
+    </div>
+
+    <div class="question-box">
+      <div class="question-text"><strong>Pergunta:</strong> Tem garantia?</div>
+      <div class="answer-text"><strong>Resposta:</strong> Sim, possui 3 meses de garantia contra defeitos de funcionamento.</div>
+    </div>
+
+    <div class="question-box">
+      <div class="question-text"><strong>Pergunta:</strong> Acompanha carregador?</div>
+      <div class="answer-text"><strong>Resposta:</strong> Acompanha cabo para carregamento.</div>
     </div>
   </section>
 
@@ -949,6 +1192,26 @@ function rolarCaracteristicas(event){
         top: posicao,
         behavior: "smooth"
     });
+}
+</script>
+
+
+<script>
+function enviarPergunta(){
+    const input = document.getElementById("question-input");
+    const alerta = document.getElementById("question-alert");
+
+    if(input.value.trim() === ""){
+        input.focus();
+        return;
+    }
+
+    alerta.style.display = "block";
+    input.value = "";
+
+    setTimeout(() => {
+        alerta.style.display = "none";
+    }, 2500);
 }
 </script>
 
