@@ -25,15 +25,28 @@ a{color:#1675ff;text-decoration:none}
 .thumbs img{width:64px;height:64px;object-fit:cover;border:1px solid #ccc;border-radius:4px;margin-bottom:10px;padding:4px}
 .thumbs img.active{border:2px solid #3483fa}
 .main-img{
+    position:relative;
     overflow:hidden;
-    cursor:zoom-in;
 }
 
 .main-img img{
     width:100%;
     max-height:560px;
     object-fit:contain;
-    transition:transform .2s ease;
+}
+
+#lupa{
+    display:none;
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:2px solid #222;
+    border-radius:50%;
+    pointer-events:none;
+    background-repeat:no-repeat;
+    background-size:220%;
+    z-index:10;
+}
 .brand{color:#1675ff;margin-bottom:18px}
 .condition{color:#777;margin-bottom:12px}
 .title{font-size:25px;font-weight:bold;margin-bottom:6px}
@@ -147,10 +160,11 @@ a{color:#1675ff;text-decoration:none}
   <img src="https://i.imgur.com/kPKhzmD.png" onclick="trocarImagem(this)">
 </div>
 
-   <div class="main-img">
+   <div class="main-img" id="area-zoom">
   <img id="imagem-principal" src="https://i.imgur.com/Uhh34rE.png">
+  <div id="lupa"></div>
 </div>
-
+      
     <div>
       <div class="brand">Conferir mais produtos da marca Apple</div>
       <div class="condition">Recondicionado | +1000 vendidos</div>
@@ -308,27 +322,30 @@ function trocarImagem(img) {
 </script>
 
 <script>
+const areaZoom = document.getElementById("area-zoom");
+const imgZoom = document.getElementById("imagem-principal");
+const lupa = document.getElementById("lupa");
 
-const imagemPrincipal = document.getElementById("imagem-principal");
+areaZoom.addEventListener("mousemove", function(e){
+    const rect = areaZoom.getBoundingClientRect();
 
-imagemPrincipal.addEventListener("mousemove", function(e){
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    const rect = this.getBoundingClientRect();
+    lupa.style.display = "block";
+    lupa.style.left = (x - 90) + "px";
+    lupa.style.top = (y - 90) + "px";
 
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const porcentoX = (x / rect.width) * 100;
+    const porcentoY = (y / rect.height) * 100;
 
-    this.style.transformOrigin = x + "% " + y + "%";
-    this.style.transform = "scale(2)";
+    lupa.style.backgroundImage = `url(${imgZoom.src})`;
+    lupa.style.backgroundPosition = `${porcentoX}% ${porcentoY}%`;
 });
 
-imagemPrincipal.addEventListener("mouseleave", function(){
-
-    this.style.transform = "scale(1)";
-    this.style.transformOrigin = "center center";
-
+areaZoom.addEventListener("mouseleave", function(){
+    lupa.style.display = "none";
 });
-
 </script>
     
 </body>
