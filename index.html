@@ -6,6 +6,22 @@
 <title>Apple iPhone 11 128GB</title>
 
 <style>
+  .buttons button{
+    background:#fff;
+    border:1px solid #bbb;
+    border-radius:6px;
+    padding:11px 15px;
+    margin-right:6px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.buttons button.active{
+    border:2px solid #3483fa;
+    background:#eaf2ff;
+    color:#3483fa;
+    font-weight:bold;
+}
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eee;color:#222}
 a{color:#1675ff;text-decoration:none}
@@ -133,17 +149,18 @@ a{color:#1675ff;text-decoration:none}
       <div class="rating">4.6 ★★★★★ (3222)</div>
 
       <div class="old">R$ 2.400</div>
-      <div class="price">R$600 <span class="off">48% OFF</span></div>
+      <div class="price">R$578,90 <span class="off">76% OFF</span></div>
       <a href="#">Ver os meios de pagamento</a>
 
-      <div class="option-title">Memória interna: <strong>128 GB</strong></div>
-      <div class="buttons">
-        <button>64 GB</button>
-        <button class="active">128 GB</button>
-        <button>256 GB</button>
-      </div>
+     <div class="option-title">Memória interna: <strong id="memoria-atual">128 GB</strong></div>
 
-      <div class="option-title">Cor: <strong>Preto</strong></div>
+<div class="buttons memory-buttons">
+    <button onclick="selecionarMemoria(this,'64 GB')">64 GB</button>
+    <button class="active" onclick="selecionarMemoria(this,'128 GB')">128 GB</button>
+    <button onclick="selecionarMemoria(this,'256 GB')">256 GB</button>
+</di
+
+      <div class="option-title">Cor: <strong>verde</strong></div>
       <div class="color-list">
         <img src="https://http2.mlstatic.com/D_NQ_NP_2X_799728-MLA46114829749_052021-F.webp">
         <img src="https://http2.mlstatic.com/D_NQ_NP_2X_618973-MLA46114990464_052021-F.webp">
@@ -257,6 +274,16 @@ document.querySelector(".buy-btn").onclick = () => {
 };
 document.querySelector(".cart-btn").onclick = () => alert("Produto adicionado ao carrinho");
 </script>
+function selecionarMemoria(botao, memoria){
 
+    document.querySelectorAll('.memory-buttons button').forEach(btn=>{
+        btn.classList.remove('active');
+    });
+
+    botao.classList.add('active');
+
+    document.getElementById('memoria-atual').innerText = memoria;
+}
+</script>
 </body>
 </html>
