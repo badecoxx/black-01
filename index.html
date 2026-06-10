@@ -7,6 +7,27 @@
 
 <style>
 
+    .color-list{
+    display:flex;
+    margin-top:10px;
+}
+
+.color-item{
+    width:72px;
+    height:72px;
+    border:2px solid #3483fa;
+    border-radius:8px;
+    padding:4px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.color-item img{
+    width:60px;
+    height:60px;
+    object-fit:contain;
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eee;color:#222}
 a{color:#1675ff;text-decoration:none}
@@ -160,13 +181,15 @@ a{color:#1675ff;text-decoration:none}
    
 </di
 
-      <div class="option-title">
-          <strong>
-          Cor : verde</strong></div>
-      <div class="color-list">
-        
-        <img class="active" src="https://i.imgur.com/Uhh34rE.png">
-      </div>
+     <div class="option-title">
+    Cor: <strong>Verde</strong>
+</div>
+
+<div class="color-list">
+    <div class="color-item active">
+        <img src="https://i.imgur.com/Uhh34rE.png" alt="iPhone Verde">
+    </div>
+</div>
 
       <div class="option-title">Status do recondicionado: <strong>Bom</strong></div>
       <div class="buttons">
