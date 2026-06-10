@@ -115,6 +115,137 @@ a{color:#1675ff;text-decoration:none}
 .product img{width:100%;height:240px;object-fit:contain}
 .product-title{font-size:16px;min-height:40px}
 .product-price{font-size:26px;margin-top:8px}
+
+.cart-icon{
+    cursor:pointer;
+    position:relative;
+    background:rgba(255,255,255,.35);
+    padding:7px 10px;
+    border-radius:18px;
+}
+#cart-count{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:20px;
+    height:20px;
+    background:#3483fa;
+    color:white;
+    border-radius:50%;
+    font-size:12px;
+    margin-left:3px;
+}
+.cart-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+}
+.cart-box{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+    overflow:hidden;
+}
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px;
+    border-bottom:1px solid #eee;
+}
+.cart-header h3{
+    margin:0;
+    font-size:22px;
+}
+.close-cart{
+    border:0;
+    background:none;
+    font-size:28px;
+    cursor:pointer;
+}
+.cart-body{
+    padding:18px;
+}
+.cart-item{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    border-bottom:1px solid #eee;
+    padding-bottom:14px;
+    margin-bottom:14px;
+}
+.cart-item img{
+    width:70px;
+    height:70px;
+    object-fit:contain;
+    border:1px solid #ddd;
+    border-radius:6px;
+}
+.cart-item-title{
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+.cart-item-price{
+    color:#00a650;
+    font-weight:bold;
+}
+.cart-actions{
+    display:flex;
+    gap:8px;
+    margin-top:8px;
+}
+.cart-actions button{
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:5px;
+    padding:5px 9px;
+    cursor:pointer;
+}
+.cart-total{
+    display:flex;
+    justify-content:space-between;
+    font-size:20px;
+    font-weight:bold;
+    margin:15px 0;
+}
+.checkout-btn{
+    width:100%;
+    border:0;
+    border-radius:6px;
+    padding:14px;
+    background:#3483fa;
+    color:#fff;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+}
+.empty-cart{
+    text-align:center;
+    color:#666;
+    padding:25px 10px;
+}
+.cart-toast{
+    display:none;
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    background:#00a650;
+    color:#fff;
+    padding:14px 18px;
+    border-radius:8px;
+    font-weight:bold;
+    z-index:1000;
+    box-shadow:0 5px 18px rgba(0,0,0,.25);
+}
+
 @media(max-width:1000px){
 .card{grid-template-columns:1fr}
 .thumbs{display:flex;gap:8px;overflow:auto}
@@ -152,7 +283,7 @@ a{color:#1675ff;text-decoration:none}
     <span>Crie a sua conta</span>
     <span>Entre</span>
     <span>Compras</span>
-    <span>🛒</span>
+    <span class="cart-icon" onclick="abrirCarrinho()">🛒 <b id="cart-count">0</b></span>
   </div>
 </header>
 
@@ -308,10 +439,138 @@ a{color:#1675ff;text-decoration:none}
 </main>
 
 <script>
+const produtoAtual = {
+    nome: "Apple iPhone 15 (128 GB) verde - (recondicionado)",
+    preco: 578.90,
+    imagem: "https://i.imgur.com/Uhh34rE.png",
+    quantidade: 1
+};
+
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
 document.querySelector(".buy-btn").onclick = () => {
     window.open('https://mpago.la/2BfrGV5', '_blank');
 };
-document.querySelector(".cart-btn").onclick = () => alert("Produto adicionado ao carrinho");
+
+document.querySelector(".cart-btn").onclick = () => {
+    adicionarAoCarrinho();
+};
+
+function salvarCarrinho(){
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    atualizarContadorCarrinho();
+}
+
+function adicionarAoCarrinho(){
+    const itemExistente = carrinho.find(item => item.nome === produtoAtual.nome);
+
+    if(itemExistente){
+        itemExistente.quantidade += 1;
+    }else{
+        carrinho.push({...produtoAtual});
+    }
+
+    salvarCarrinho();
+    mostrarAvisoCarrinho();
+    abrirCarrinho();
+}
+
+function atualizarContadorCarrinho(){
+    const totalItens = carrinho.reduce((total, item) => total + item.quantidade, 0);
+    document.getElementById("cart-count").innerText = totalItens;
+}
+
+function abrirCarrinho(){
+    renderizarCarrinho();
+    document.getElementById("cart-modal").style.display = "flex";
+}
+
+function fecharCarrinho(){
+    document.getElementById("cart-modal").style.display = "none";
+}
+
+function aumentarQuantidade(index){
+    carrinho[index].quantidade += 1;
+    salvarCarrinho();
+    renderizarCarrinho();
+}
+
+function diminuirQuantidade(index){
+    carrinho[index].quantidade -= 1;
+
+    if(carrinho[index].quantidade <= 0){
+        carrinho.splice(index, 1);
+    }
+
+    salvarCarrinho();
+    renderizarCarrinho();
+}
+
+function removerItem(index){
+    carrinho.splice(index, 1);
+    salvarCarrinho();
+    renderizarCarrinho();
+}
+
+function renderizarCarrinho(){
+    const cartBody = document.getElementById("cart-body");
+
+    if(carrinho.length === 0){
+        cartBody.innerHTML = `<div class="empty-cart">Seu carrinho está vazio.</div>`;
+        return;
+    }
+
+    let total = 0;
+
+    cartBody.innerHTML = carrinho.map((item, index) => {
+        total += item.preco * item.quantidade;
+
+        return `
+            <div class="cart-item">
+                <img src="${item.imagem}">
+                <div style="flex:1">
+                    <div class="cart-item-title">${item.nome}</div>
+                    <div class="cart-item-price">R$ ${item.preco.toFixed(2).replace(".", ",")}</div>
+                    <small>Quantidade: ${item.quantidade}</small>
+                    <div class="cart-actions">
+                        <button onclick="diminuirQuantidade(${index})">-</button>
+                        <button onclick="aumentarQuantidade(${index})">+</button>
+                        <button onclick="removerItem(${index})">Remover</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    cartBody.innerHTML += `
+        <div class="cart-total">
+            <span>Total:</span>
+            <span>R$ ${total.toFixed(2).replace(".", ",")}</span>
+        </div>
+        <button class="checkout-btn" onclick="window.open('https://mpago.la/2BfrGV5','_blank')">
+            Finalizar compra
+        </button>
+    `;
+}
+
+function mostrarAvisoCarrinho(){
+    const toast = document.getElementById("cart-toast");
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 1800);
+}
+
+document.addEventListener("click", function(e){
+    const modal = document.getElementById("cart-modal");
+
+    if(e.target === modal){
+        fecharCarrinho();
+    }
+});
+
+atualizarContadorCarrinho();
 </script>
 <script>
 function selecionarMemoria(botao, memoria){
@@ -406,5 +665,17 @@ areaZoom.addEventListener("mouseleave", function(){
 });
 </script>
     
+<div class="cart-modal" id="cart-modal">
+  <div class="cart-box">
+    <div class="cart-header">
+      <h3>Meu carrinho</h3>
+      <button class="close-cart" onclick="fecharCarrinho()">×</button>
+    </div>
+    <div class="cart-body" id="cart-body"></div>
+  </div>
+</div>
+
+<div class="cart-toast" id="cart-toast">Produto adicionado ao carrinho</div>
+
 </body>
 </html>
