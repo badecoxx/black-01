@@ -507,6 +507,7 @@ const produtoAtual = {
 };
 
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+carrinho = carrinho.length > 0 ? [{...carrinho[0], quantidade: 1}] : [];
 
 document.querySelector(".buy-btn").onclick = () => {
     irParaCheckoutComCarregamento();
@@ -522,13 +523,10 @@ function salvarCarrinho(){
 }
 
 function adicionarAoCarrinho(){
-    const itemExistente = carrinho.find(item => item.nome === produtoAtual.nome);
-
-    if(itemExistente){
-        itemExistente.quantidade += 1;
-    }else{
-        carrinho.push({...produtoAtual});
-    }
+    carrinho = [{
+        ...produtoAtual,
+        quantidade: 1
+    }];
 
     salvarCarrinho();
     mostrarAvisoCarrinho();
@@ -536,8 +534,7 @@ function adicionarAoCarrinho(){
 }
 
 function atualizarContadorCarrinho(){
-    const totalItens = carrinho.reduce((total, item) => total + item.quantidade, 0);
-    document.getElementById("cart-count").innerText = totalItens;
+    document.getElementById("cart-count").innerText = carrinho.length > 0 ? 1 : 0;
 }
 
 function abrirCarrinho(){
@@ -549,22 +546,6 @@ function fecharCarrinho(){
     document.getElementById("cart-modal").style.display = "none";
 }
 
-function aumentarQuantidade(index){
-    carrinho[index].quantidade += 1;
-    salvarCarrinho();
-    renderizarCarrinho();
-}
-
-function diminuirQuantidade(index){
-    carrinho[index].quantidade -= 1;
-
-    if(carrinho[index].quantidade <= 0){
-        carrinho.splice(index, 1);
-    }
-
-    salvarCarrinho();
-    renderizarCarrinho();
-}
 
 function removerItem(index){
     carrinho.splice(index, 1);
@@ -583,7 +564,7 @@ function renderizarCarrinho(){
     let total = 0;
 
     cartBody.innerHTML = carrinho.map((item, index) => {
-        total += item.preco * item.quantidade;
+        total += item.preco;
 
         return `
             <div class="cart-item">
@@ -591,11 +572,9 @@ function renderizarCarrinho(){
                 <div style="flex:1">
                     <div class="cart-item-title">${item.nome}</div>
                     <div class="cart-item-price">R$ ${item.preco.toFixed(2).replace(".", ",")}</div>
-                    <small>Quantidade: ${item.quantidade}</small>
+                    <small>Quantidade: 1 unidade</small>
                     <div class="cart-actions">
-                        <button onclick="diminuirQuantidade(${index})">-</button>
-                        <button onclick="aumentarQuantidade(${index})">+</button>
-                        <button onclick="removerItem(${index})">Remover</button>
+                        <button onclick="removerItem(${index})">Remover do carrinho</button>
                     </div>
                 </div>
             </div>
@@ -760,4 +739,4 @@ areaZoom.addEventListener("mouseleave", function(){
 <div class="cart-toast" id="cart-toast">Produto adicionado ao carrinho</div>
 
 </body>
-</html>
+</html
