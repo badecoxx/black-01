@@ -21,8 +21,18 @@ a{color:#1675ff;text-decoration:none}
 .suggest{padding:20px 0;background:#eee;font-size:16px}
 .page{max-width:1320px;margin:auto}
 .breadcrumb{display:flex;justify-content:space-between;margin-bottom:14px}
-.card{background:#fff;border-radius:6px;display:grid;grid-template-columns:90px 430px 1fr 348px;gap:28px;padding:28px;border:1px solid #ddd}
-.thumbs img{width:64px;height:64px;object-fit:cover;border:1px solid #ccc;border-radius:4px;margin-bottom:10px;padding:4px}
+.card{background:#fff;border-radius:6px;display:grid;grid-template-columns:548px 1fr 348px;gap:28px;padding:28px;border:1px solid #ddd}
+.gallery-sticky{
+    display:grid;
+    grid-template-columns:90px 430px;
+    gap:28px;
+    align-self:start;
+    position:relative;
+    z-index:5;
+    will-change:transform;
+    transition:transform .08s linear;
+}
+.thumbs img{width:64px;height:64px;object-fit:cover;border:1px solid #ccc;border-radius:4px;margin-bottom:10px;padding:4px;cursor:pointer;background:#fff}
 .thumbs img.active{border:2px solid #3483fa}
 .main-img{
     position:relative;
@@ -383,6 +393,7 @@ a{color:#1675ff;text-decoration:none}
 
 @media(max-width:1000px){
 .card{grid-template-columns:1fr}
+.gallery-sticky{display:block;transform:none!important}
 .thumbs{display:flex;gap:8px;overflow:auto}
 .banner{display:none}
 .products{grid-template-columns:1fr}
@@ -433,20 +444,22 @@ a{color:#1675ff;text-decoration:none}
     <div><a href="#">Vender um igual</a> | <a href="#">Compartilhar</a></div>
   </div>
 
-  <section class="card">
-    <div class="thumbs">
-  <img class="active" src="https://i.imgur.com/Uhh34rE.png" onclick="trocarImagem(this)">
-  <img src="https://i.imgur.com/80kay5x.png" onclick="trocarImagem(this)">
-  <img src="https://i.imgur.com/60SLLd9.png" onclick="trocarImagem(this)">
-  <img src="https://i.imgur.com/VwA3zlH.png" onclick="trocarImagem(this)">
-  <img src="https://i.imgur.com/kPKhzmD.png" onclick="trocarImagem(this)">
-</div>
+  <section class="card" id="produto-card">
+    <div class="gallery-sticky" id="gallery-sticky">
+      <div class="thumbs">
+        <img class="active" src="https://i.imgur.com/Uhh34rE.png" onclick="trocarImagem(this)">
+        <img src="https://i.imgur.com/80kay5x.png" onclick="trocarImagem(this)">
+        <img src="https://i.imgur.com/60SLLd9.png" onclick="trocarImagem(this)">
+        <img src="https://i.imgur.com/VwA3zlH.png" onclick="trocarImagem(this)">
+        <img src="https://i.imgur.com/kPKhzmD.png" onclick="trocarImagem(this)">
+      </div>
 
-   <div class="main-img" id="area-zoom">
-  <img id="imagem-principal" src="https://i.imgur.com/Uhh34rE.png">
-  <div id="zoom-lens"></div>
-  <div id="zoom-window"></div>
-</div>
+      <div class="main-img" id="area-zoom">
+        <img id="imagem-principal" src="https://i.imgur.com/Uhh34rE.png">
+        <div id="zoom-lens"></div>
+        <div id="zoom-window"></div>
+      </div>
+    </div>
       
     <div>
       <div class="brand">Conferir mais produtos da marca Apple</div>
@@ -852,6 +865,43 @@ areaZoom.addEventListener("mouseleave", function(){
     
 
 <script>
+const gallerySticky = document.getElementById("gallery-sticky");
+const produtoCard = document.getElementById("produto-card");
+let galleryTicking = false;
+
+function atualizarGaleriaDinamica(){
+    if(!gallerySticky || !produtoCard){ return; }
+
+    if(window.innerWidth <= 1000){
+        gallerySticky.style.transform = "translateY(0px)";
+        galleryTicking = false;
+        return;
+    }
+
+    const distanciaTopo = 86;
+    const cardTop = produtoCard.offsetTop;
+    const maxMove = Math.max(0, produtoCard.offsetHeight - gallerySticky.offsetHeight - 28);
+    const scrollMove = window.scrollY + distanciaTopo - cardTop;
+    const movimento = Math.min(Math.max(scrollMove, 0), maxMove);
+
+    gallerySticky.style.transform = `translateY(${movimento}px)`;
+    galleryTicking = false;
+}
+
+function solicitarAtualizacaoGaleria(){
+    if(!galleryTicking){
+        window.requestAnimationFrame(atualizarGaleriaDinamica);
+        galleryTicking = true;
+    }
+}
+
+window.addEventListener("scroll", solicitarAtualizacaoGaleria, {passive:true});
+window.addEventListener("resize", solicitarAtualizacaoGaleria);
+window.addEventListener("load", solicitarAtualizacaoGaleria);
+solicitarAtualizacaoGaleria();
+</script>
+
+<script>
 function mostrarCaracteristicas(){
     const mais = document.getElementById("mais-caracteristicas");
     const botao = document.getElementById("btn-caracteristicas");
@@ -888,4 +938,3 @@ function mostrarCaracteristicas(){
 <div class="cart-toast" id="cart-toast">Produto adicionado ao carrinho</div>
 
 </body>
-</html>
