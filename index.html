@@ -7,25 +7,6 @@
 
 <style>
 
-    .thumbs img{
-    width:64px;
-    height:64px;
-    object-fit:contain;
-    border:1px solid #ddd;
-    border-radius:6px;
-    margin-bottom:10px;
-    cursor:pointer;
-    padding:4px;
-    background:#fff;
-}
-
-.thumbs img:hover{
-    border:2px solid #3483fa;
-}
-
-.thumbs img.active{
-    border:2px solid #3483fa;
-}
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eee;color:#222}
 a{color:#1675ff;text-decoration:none}
@@ -149,34 +130,17 @@ a{color:#1675ff;text-decoration:none}
   </div>
 
   <section class="card">
-   <div class="thumbs">
-
-    <img class="active"
-         src="https://i.imgur.com/CijFeds.png"
-         onclick="trocarImagem(this)">
-
-    <img src="https://i.imgur.com/80kay5x.png"
-         onclick="trocarImagem(this)">
-
-    <img src="https://i.imgur.com/60SLLd9.png"
-         onclick="trocarImagem(this)">
-
-    <img src="https://i.imgur.com/VwA3zlH.png"
-         onclick="trocarImagem(this)">
-
-    <img src="https://i.imgur.com/kPKhzmD.png"
-         onclick="trocarImagem(this)">
-
+    <div class="thumbs">
+  <img class="active" src="https://i.imgur.com/Uhh34rE.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/80kay5x.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/60SLLd9.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/VwA3zlH.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/kPKhzmD.png" onclick="trocarImagem(this)">
 </div>
 
-<div class="main-img">
-    <img id="imagem-principal"
-         src="https://i.imgur.com/CijFeds.png">
+   <div class="main-img">
+  <img id="imagem-principal" src="https://i.imgur.com/Uhh34rE.png">
 </div>
-
-    <div class="main-img">
-      <img src="https://i.imgur.com/CijFeds.png">
-    </div>
 
     <div>
       <div class="brand">Conferir mais produtos da marca Apple</div>
@@ -321,23 +285,18 @@ function selecionarMemoria(botao, memoria){
     document.getElementById('memoria-atual').innerText = memoria;
 }
 </script>
-    
-   <script>
 
-function trocarImagem(imagem){
+<script>
+function trocarImagem(img) {
+  document.getElementById("imagem-principal").src = img.src;
 
-    document.getElementById("imagem-principal").src =
-    imagem.src;
+  document.querySelectorAll(".thumbs img").forEach(function(item) {
+    item.classList.remove("active");
+  });
 
-    document.querySelectorAll(".thumbs img")
-    .forEach(function(item){
-        item.classList.remove("active");
-    });
-
-    imagem.classList.add("active");
+  img.classList.add("active");
 }
-
 </script>
-</script>
+    
 </body>
 </html>
