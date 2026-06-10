@@ -130,13 +130,9 @@ a{color:#1675ff;text-decoration:none}
   </div>
 
   <section class="card">
-    <div class="thumbs">
-      <img class="https://i.imgur.com/Uhh34rE.png">
-      <img src="https://i.imgur.com/80kay5x.png">
-      <img src="https://i.imgur.com/60SLLd9.png">
-      <img src="https://i.imgur.com/VwA3zlH.png">
-      <img src="https://i.imgur.com/kPKhzmD.png">
-    </div>
+    <div class="main-img">
+  <img id="imagem-principal" src="https://i.imgur.com/CijFeds.png">
+</div>
 
     <div class="main-img">
       <img src="https://i.imgur.com/CijFeds.png">
@@ -283,6 +279,18 @@ function selecionarMemoria(botao, memoria){
     botao.classList.add('active');
 
     document.getElementById('memoria-atual').innerText = memoria;
+}
+</script>
+    
+    <script>
+function trocarImagem(imgClicada) {
+  document.getElementById("imagem-principal").src = imgClicada.src;
+
+  document.querySelectorAll(".thumbs img").forEach(img => {
+    img.classList.remove("active");
+  });
+
+  imgClicada.classList.add("active");
 }
 </script>
 </body>
