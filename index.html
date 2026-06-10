@@ -26,7 +26,13 @@ a{color:#1675ff;text-decoration:none}
 .thumbs img.active{border:2px solid #3483fa}
 .main-img{
     position:relative;
-    overflow:hidden;
+    overflow:visible;
+    height:560px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    cursor:crosshair;
 }
 
 .main-img img{
@@ -35,17 +41,27 @@ a{color:#1675ff;text-decoration:none}
     object-fit:contain;
 }
 
-#lupa{
+#zoom-lens{
     display:none;
     position:absolute;
-    width:180px;
-    height:180px;
-    border:2px solid #222;
-    border-radius:50%;
+    width:240px;
+    height:240px;
+    background:rgba(0,0,0,.35);
     pointer-events:none;
+    z-index:20;
+}
+
+#zoom-window{
+    display:none;
+    position:absolute;
+    left:calc(100% + 28px);
+    top:0;
+    width:760px;
+    height:560px;
+    background:#fff;
+    border:1px solid #ddd;
     background-repeat:no-repeat;
-    background-size:220%;
-    z-index:10;
+    z-index:50;
 }
 .brand{color:#1675ff;margin-bottom:18px}
 .condition{color:#777;margin-bottom:12px}
@@ -162,7 +178,8 @@ a{color:#1675ff;text-decoration:none}
 
    <div class="main-img" id="area-zoom">
   <img id="imagem-principal" src="https://i.imgur.com/Uhh34rE.png">
-  <div id="lupa"></div>
+  <div id="zoom-lens"></div>
+  <div id="zoom-window"></div>
 </div>
       
     <div>
@@ -324,27 +341,68 @@ function trocarImagem(img) {
 <script>
 const areaZoom = document.getElementById("area-zoom");
 const imgZoom = document.getElementById("imagem-principal");
-const lupa = document.getElementById("lupa");
+const zoomLens = document.getElementById("zoom-lens");
+const zoomWindow = document.getElementById("zoom-window");
+
+function getImagemRealRect(){
+    const area = areaZoom.getBoundingClientRect();
+    const imgRatio = imgZoom.naturalWidth / imgZoom.naturalHeight;
+    const areaRatio = area.width / area.height;
+
+    let largura, altura, esquerda, topo;
+
+    if(areaRatio > imgRatio){
+        altura = area.height;
+        largura = altura * imgRatio;
+        esquerda = (area.width - largura) / 2;
+        topo = 0;
+    }else{
+        largura = area.width;
+        altura = largura / imgRatio;
+        esquerda = 0;
+        topo = (area.height - altura) / 2;
+    }
+
+    return {area, largura, altura, esquerda, topo};
+}
 
 areaZoom.addEventListener("mousemove", function(e){
-    const rect = areaZoom.getBoundingClientRect();
+    const r = getImagemRealRect();
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    let x = e.clientX - r.area.left - r.esquerda;
+    let y = e.clientY - r.area.top - r.topo;
 
-    lupa.style.display = "block";
-    lupa.style.left = (x - 90) + "px";
-    lupa.style.top = (y - 90) + "px";
+    if(x < 0 || y < 0 || x > r.largura || y > r.altura){
+        zoomLens.style.display = "none";
+        zoomWindow.style.display = "none";
+        return;
+    }
 
-    const porcentoX = (x / rect.width) * 100;
-    const porcentoY = (y / rect.height) * 100;
+    const lensW = zoomLens.offsetWidth;
+    const lensH = zoomLens.offsetHeight;
 
-    lupa.style.backgroundImage = `url(${imgZoom.src})`;
-    lupa.style.backgroundPosition = `${porcentoX}% ${porcentoY}%`;
+    let lensX = x + r.esquerda - lensW / 2;
+    let lensY = y + r.topo - lensH / 2;
+
+    lensX = Math.max(r.esquerda, Math.min(lensX, r.esquerda + r.largura - lensW));
+    lensY = Math.max(r.topo, Math.min(lensY, r.topo + r.altura - lensH));
+
+    zoomLens.style.display = "block";
+    zoomLens.style.left = lensX + "px";
+    zoomLens.style.top = lensY + "px";
+
+    zoomWindow.style.display = "block";
+    zoomWindow.style.backgroundImage = `url(${imgZoom.src})`;
+
+    const zoom = 2.8;
+    zoomWindow.style.backgroundSize = (r.largura * zoom) + "px " + (r.altura * zoom) + "px";
+    zoomWindow.style.backgroundPosition =
+      `-${(x * zoom) - (zoomWindow.offsetWidth / 2)}px -${(y * zoom) - (zoomWindow.offsetHeight / 2)}px`;
 });
 
 areaZoom.addEventListener("mouseleave", function(){
-    lupa.style.display = "none";
+    zoomLens.style.display = "none";
+    zoomWindow.style.display = "none";
 });
 </script>
     
