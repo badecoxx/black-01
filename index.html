@@ -543,19 +543,6 @@ a{color:#1675ff;text-decoration:none}
 .banner{display:none}
 .products{grid-template-columns:1fr}
 }
-
-.fake-link{
-cursor:pointer;
-transition:.2s;
-user-select:none;
-}
-.fake-link:hover{
-color:#3483fa;
-}
-.fake-link:active{
-transform:scale(.97);
-}
-
 </style>
 </head>
 
@@ -575,18 +562,18 @@ transform:scale(.97);
   </div>
 
   <div class="nav">
-    <span class="left fake-link">📍 Informe seu CEP</span>
-    <span class="fake-link">Categorias⌄</span>
-    <span class="fake-link">Ofertas</span>
-    <span class="fake-link">Cupons</span>
-    <span class="fake-link">Supermercado</span>
-    <span class="fake-link">Moda</span>
-    <span class="fake-link">Mercado Play</span>
-    <span class="fake-link">Vender</span>
-    <span class="fake-link">Contato</span>
-    <span class="fake-link">Crie a sua conta</span>
-    <span class="fake-link">Entre</span>
-    <span class="fake-link">Compras</span>
+    <span class="left">📍 Informe seu CEP</span>
+    <span>Categorias⌄</span>
+    <span>Ofertas</span>
+    <span>Cupons</span>
+    <span>Supermercado</span>
+    <span>Moda</span>
+    <span>Mercado Play</span>
+    <span>Vender</span>
+    <span>Contato</span>
+    <span>Crie a sua conta</span>
+    <span>Entre</span>
+    <span>Compras</span>
     <span class="cart-icon" onclick="abrirCarrinho()">🛒 <b id="cart-count">0</b></span>
   </div>
 </header>
@@ -663,13 +650,6 @@ transform:scale(.97);
 
     <aside>
       <div class="buy-box">
-        <div class="buy-section">
-          <strong>Parcelamento sem juros</strong>
-          <div class="buy-price">R$ 699,90</div>
-          <div class="green">10x R$ 69,99 sem juros</div>
-          <small>Vendido por CLAUDIASTORE</small>
-        </div>
-
         <div class="buy-section active">
           <strong>Melhor preço</strong>
           <div class="old">R$ 2.400</div>
@@ -690,6 +670,13 @@ transform:scale(.97);
       <button class="buy-btn">Comprar agora</button>
       
           <button class="cart-btn">Adicionar ao carrinho</button>
+        </div>
+
+<div class="buy-section">
+          <strong>Parcelamento sem juros</strong>
+          <div class="buy-price">R$ 699,90</div>
+          <div class="green">10x R$ 69,99 sem juros</div>
+          <small>Vendido por CLAUDIASTORE</small>
         </div>
       </div>
 
@@ -1226,16 +1213,6 @@ function enviarPergunta(){
         alerta.style.display = "none";
     }, 2500);
 }
-</script>
-
-
-<script>
-document.querySelectorAll(".fake-link").forEach(item=>{
- item.addEventListener("click",function(){
-   this.style.opacity="0.6";
-   setTimeout(()=>{this.style.opacity="1";},120);
- });
-});
 </script>
 
 </body>
