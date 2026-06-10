@@ -543,6 +543,135 @@ a{color:#1675ff;text-decoration:none}
 .banner{display:none}
 .products{grid-template-columns:1fr}
 }
+
+/* Modelo de preço estilo Mercado Livre */
+.buy-box{
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    overflow:hidden;
+}
+.buy-section{
+    padding:18px;
+    border-bottom:1px solid #ddd;
+    position:relative;
+}
+.buy-section:last-child{
+    border-bottom:0;
+}
+.buy-section.active{
+    background:#fff;
+}
+.offer-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+}
+.offer-title{
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+.fake-radio{
+    width:15px;
+    height:15px;
+    border:1px solid #777;
+    border-radius:50%;
+    flex:0 0 auto;
+    margin-top:3px;
+    position:relative;
+}
+.fake-radio.selected{
+    border:2px solid #3483fa;
+}
+.fake-radio.selected::after{
+    content:"";
+    width:7px;
+    height:7px;
+    background:#3483fa;
+    border-radius:50%;
+    position:absolute;
+    top:2px;
+    left:2px;
+}
+.buy-section .buy-price{
+    font-size:30px;
+    line-height:1.1;
+    margin:6px 0 4px;
+    font-weight:400;
+}
+.buy-section.active .buy-price{
+    font-size:34px;
+    font-weight:500;
+}
+.seller-small{
+    color:#777;
+    font-size:13px;
+}
+.installment-green{
+    color:#00a650;
+    margin:8px 0 14px;
+}
+.free-badge{
+    display:inline-block;
+    background:#00a650;
+    color:#fff;
+    font-size:13px;
+    font-weight:bold;
+    padding:3px 6px;
+    border-radius:2px;
+    margin:5px 0 16px;
+}
+.delivery-text{
+    line-height:1.45;
+    margin:14px 0;
+}
+.delivery-text .green{
+    font-size:17px;
+}
+.stock-alert{
+    font-size:20px;
+    margin:24px 0 16px;
+    font-weight:bold;
+}
+.buy-btn{
+    margin-top:10px;
+}
+.cart-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+.store-mini{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-top:24px;
+    padding-top:18px;
+    border-top:1px solid #eee;
+}
+.store-mini-logo{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    object-fit:cover;
+    background:#fff;
+}
+.store-mini-title{
+    color:#555;
+    font-size:14px;
+    line-height:1.4;
+}
+.store-mini-title a{
+    color:#3483fa;
+}
+.store-mini strong{
+    color:#222;
+}
+
 </style>
 </head>
 
@@ -650,33 +779,49 @@ a{color:#1675ff;text-decoration:none}
 
     <aside>
       <div class="buy-box">
-        <div class="buy-section active">
-          <strong>Melhor preço</strong>
-          <div class="old">R$ 2.400</div>
-          <div class="buy-price">R$699,90<span class="off">76% OFF</span></div>
-          <div class="badge">FRETE GRÁTIS</div>
-
-          <p><span class="green">Chegará grátis entre 19 e 20/jun</span> por ser sua primeira compra</p>
-          <a href="#">Mais detalhes e formas de entrega</a>
-
-          <p><span class="green">Retire grátis</span> entre 23 e 24/jun em uma agência Mercado Livre</p>
-          <a href="#">Ver no mapa</a>
-
-          <div class="qty">
-            <strong>Estoque disponível</strong><br>
-            Quantidade: <strong>1 unidade</strong> (+1 disponíveis)
+        <div class="buy-section">
+          <div class="offer-head">
+            <div>
+              <div class="offer-title">Melhor preço</div>
+              <div class="buy-price">R$ 699,90</div>
+              <div class="seller-small">Vendido por CLAUDIASTORE</div>
+            </div>
+            <span class="fake-radio"></span>
           </div>
-
-      <button class="buy-btn">Comprar agora</button>
-      
-          <button class="cart-btn">Adicionar ao carrinho</button>
         </div>
 
-<div class="buy-section">
-          <strong>Parcelamento sem juros</strong>
-          <div class="buy-price">R$ 699,90</div>
-          <div class="green">10x R$ 69,99 sem juros</div>
-          <small>Vendido por CLAUDIASTORE</small>
+        <div class="buy-section active">
+          <div class="offer-head">
+            <div style="flex:1">
+              <div class="offer-title">Parcelamento sem juros</div>
+              <div class="buy-price">R$ 699<sup>90</sup></div>
+              <div class="installment-green">10x R$ 69,99 sem juros</div>
+              <div class="free-badge">FRETE GRÁTIS</div>
+
+              <div class="delivery-text">
+                <p><span class="green">Chegará grátis entre 19 e 20/jun</span> por ser sua primeira compra</p>
+                <a href="#">Mais detalhes e formas de entrega</a>
+
+                <p><span class="green">Retire grátis</span> entre 23 e 24/jun em uma agência Mercado Livre</p>
+                <small>Você tem um ponto de envio próximo</small><br>
+                <a href="#">Ver no mapa</a>
+              </div>
+
+              <div class="stock-alert">Última em estoque!</div>
+
+              <button class="buy-btn">Comprar agora</button>
+              <button class="cart-btn">🛒 Adicionar ao carrinho</button>
+
+              <div class="store-mini">
+                <img class="store-mini-logo" src="https://i.imgur.com/GkGpS4p.png">
+                <div class="store-mini-title">
+                  Loja oficial <a href="#">SHOPCLIC</a> ✔<br>
+                  <strong>+5 mil vendas</strong>
+                </div>
+              </div>
+            </div>
+            <span class="fake-radio selected"></span>
+          </div>
         </div>
       </div>
 
@@ -684,16 +829,6 @@ a{color:#1675ff;text-decoration:none}
         ↩️ <a href="#">Devolução grátis.</a> Você tem 30 dias a partir da data de recebimento.<br>
         🛡️ <a href="#">Compra Garantida.</a> Receba o produto que está esperando ou devolvemos o dinheiro.<br>
         🏅 3 meses de garantia de fábrica.
-      </div>
-
-      <div class="store">
-        <div class="store-cover"></div>
-        <div class="store-title">SHOPCLIC</div>
-        <p>Loja oficial do Mercado Livre ✔️</p>
-        <p><strong>+5mil</strong> Seguidores · <strong>+100</strong> Produtos</p>
-        <p class="green">MercadoLíder Platinum</p>
-        <p>É um dos melhores do site!</p>
-        <button class="store-btn">Ir para a loja oficial</button>
       </div>
     </aside>
   </section>
