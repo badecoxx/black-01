@@ -24,7 +24,16 @@ a{color:#1675ff;text-decoration:none}
 .card{background:#fff;border-radius:6px;display:grid;grid-template-columns:90px 430px 1fr 348px;gap:28px;padding:28px;border:1px solid #ddd}
 .thumbs img{width:64px;height:64px;object-fit:cover;border:1px solid #ccc;border-radius:4px;margin-bottom:10px;padding:4px}
 .thumbs img.active{border:2px solid #3483fa}
-.main-img img{width:100%;max-height:560px;object-fit:contain}
+.main-img{
+    overflow:hidden;
+    cursor:zoom-in;
+}
+
+.main-img img{
+    width:100%;
+    max-height:560px;
+    object-fit:contain;
+    transition:transform .2s ease;
 .brand{color:#1675ff;margin-bottom:18px}
 .condition{color:#777;margin-bottom:12px}
 .title{font-size:25px;font-weight:bold;margin-bottom:6px}
@@ -131,16 +140,16 @@ a{color:#1675ff;text-decoration:none}
 
   <section class="card">
     <div class="thumbs">
-      <img class="https://i.imgur.com/Uhh34rE.png">
-      <img src="https://i.imgur.com/80kay5x.png">
-      <img src="https://i.imgur.com/60SLLd9.png">
-      <img src="https://i.imgur.com/VwA3zlH.png">
-      <img src="https://i.imgur.com/kPKhzmD.png">
-    </div>
+  <img class="active" src="https://i.imgur.com/Uhh34rE.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/80kay5x.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/60SLLd9.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/VwA3zlH.png" onclick="trocarImagem(this)">
+  <img src="https://i.imgur.com/kPKhzmD.png" onclick="trocarImagem(this)">
+</div>
 
-    <div class="main-img">
-      <img src="https://i.imgur.com/CijFeds.png">
-    </div>
+   <div class="main-img">
+  <img id="imagem-principal" src="https://i.imgur.com/Uhh34rE.png">
+</div>
 
     <div>
       <div class="brand">Conferir mais produtos da marca Apple</div>
@@ -211,7 +220,7 @@ a{color:#1675ff;text-decoration:none}
           </div>
 
       <button class="buy-btn">Comprar agora</button>
-      </button>
+      
           <button class="cart-btn">Adicionar ao carrinho</button>
         </div>
       </div>
@@ -285,5 +294,42 @@ function selecionarMemoria(botao, memoria){
     document.getElementById('memoria-atual').innerText = memoria;
 }
 </script>
+
+<script>
+function trocarImagem(img) {
+  document.getElementById("imagem-principal").src = img.src;
+
+  document.querySelectorAll(".thumbs img").forEach(function(item) {
+    item.classList.remove("active");
+  });
+
+  img.classList.add("active");
+}
+</script>
+
+<script>
+
+const imagemPrincipal = document.getElementById("imagem-principal");
+
+imagemPrincipal.addEventListener("mousemove", function(e){
+
+    const rect = this.getBoundingClientRect();
+
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    this.style.transformOrigin = x + "% " + y + "%";
+    this.style.transform = "scale(2)";
+});
+
+imagemPrincipal.addEventListener("mouseleave", function(){
+
+    this.style.transform = "scale(1)";
+    this.style.transformOrigin = "center center";
+
+});
+
+</script>
+    
 </body>
 </html>
