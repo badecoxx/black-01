@@ -543,6 +543,19 @@ a{color:#1675ff;text-decoration:none}
 .banner{display:none}
 .products{grid-template-columns:1fr}
 }
+
+.fake-link{
+cursor:pointer;
+transition:.2s;
+user-select:none;
+}
+.fake-link:hover{
+color:#3483fa;
+}
+.fake-link:active{
+transform:scale(.97);
+}
+
 </style>
 </head>
 
@@ -562,18 +575,18 @@ a{color:#1675ff;text-decoration:none}
   </div>
 
   <div class="nav">
-    <span class="left">📍 Informe seu CEP</span>
-    <span>Categorias⌄</span>
-    <span>Ofertas</span>
-    <span>Cupons</span>
-    <span>Supermercado</span>
-    <span>Moda</span>
-    <span>Mercado Play</span>
-    <span>Vender</span>
-    <span>Contato</span>
-    <span>Crie a sua conta</span>
-    <span>Entre</span>
-    <span>Compras</span>
+    <span class="left fake-link">📍 Informe seu CEP</span>
+    <span class="fake-link">Categorias⌄</span>
+    <span class="fake-link">Ofertas</span>
+    <span class="fake-link">Cupons</span>
+    <span class="fake-link">Supermercado</span>
+    <span class="fake-link">Moda</span>
+    <span class="fake-link">Mercado Play</span>
+    <span class="fake-link">Vender</span>
+    <span class="fake-link">Contato</span>
+    <span class="fake-link">Crie a sua conta</span>
+    <span class="fake-link">Entre</span>
+    <span class="fake-link">Compras</span>
     <span class="cart-icon" onclick="abrirCarrinho()">🛒 <b id="cart-count">0</b></span>
   </div>
 </header>
@@ -635,7 +648,7 @@ a{color:#1675ff;text-decoration:none}
       <div class="option-title">Status do recondicionado: <strong>Bom</strong></div>
       <div class="buttons">
        
-        <button class="active">Bom<br><strong>R$699,90</strong></button>
+       <button class="active"><strong>Bom</strong><br>R$699,90</button>
       </div>
 
       <div class="info-box">
@@ -1213,6 +1226,16 @@ function enviarPergunta(){
         alerta.style.display = "none";
     }, 2500);
 }
+</script>
+
+
+<script>
+document.querySelectorAll(".fake-link").forEach(item=>{
+ item.addEventListener("click",function(){
+   this.style.opacity="0.6";
+   setTimeout(()=>{this.style.opacity="1";},120);
+ });
+});
 </script>
 
 </body>
