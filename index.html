@@ -6,6 +6,8 @@
 <title>Apple iPhone 11 128GB</title>
 
 <style>
+html{scroll-behavior:smooth;}
+
 
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eee;color:#222}
@@ -499,7 +501,7 @@ a{color:#1675ff;text-decoration:none}
         <p>• Tela sem detalhes nem imperfeições.</p>
         <p>• Marcas de uso pequenas.</p>
         <p>Produto usado que foi vistoriado ou reparado para garantir o bom funcionamento. Pode não incluir acessórios ou embalagem original.</p>
-        <a href="#caracteristicas">Ver características</a>
+        <a href="#caracteristicas" onclick="rolarCaracteristicas(event)">Ver características</a>
       </div>
     </div>
 
@@ -936,5 +938,18 @@ function mostrarCaracteristicas(){
 </div>
 
 <div class="cart-toast" id="cart-toast">Produto adicionado ao carrinho</div>
+
+
+<script>
+function rolarCaracteristicas(event){
+    event.preventDefault();
+    const destino = document.getElementById("caracteristicas");
+    const posicao = destino.getBoundingClientRect().top + window.pageYOffset - 80;
+    window.scrollTo({
+        top: posicao,
+        behavior: "smooth"
+    });
+}
+</script>
 
 </body>
