@@ -246,6 +246,66 @@ a{color:#1675ff;text-decoration:none}
     box-shadow:0 5px 18px rgba(0,0,0,.25);
 }
 
+
+.loading-checkout{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#fff;
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:Arial,Helvetica,sans-serif;
+}
+.loading-card{
+    width:360px;
+    max-width:90%;
+    background:#fff;
+    border-radius:10px;
+    padding:32px 24px;
+    box-shadow:0 8px 30px rgba(0,0,0,.15);
+}
+.loading-spinner{
+    width:54px;
+    height:54px;
+    border:5px solid #e5e5e5;
+    border-top-color:#3483fa;
+    border-radius:50%;
+    margin:0 auto 18px;
+    animation:girar 1s linear infinite;
+}
+.loading-card h3{
+    margin:0 0 10px;
+    font-size:22px;
+    color:#333;
+}
+.loading-card p{
+    margin:0 0 18px;
+    color:#666;
+    font-size:15px;
+    line-height:1.4;
+}
+.loading-bar{
+    height:8px;
+    background:#eee;
+    border-radius:20px;
+    overflow:hidden;
+}
+.loading-bar span{
+    display:block;
+    height:100%;
+    width:0;
+    background:#3483fa;
+    animation:carregar 2.6s ease forwards;
+}
+@keyframes girar{
+    to{transform:rotate(360deg)}
+}
+@keyframes carregar{
+    to{width:100%}
+}
+
 @media(max-width:1000px){
 .card{grid-template-columns:1fr}
 .thumbs{display:flex;gap:8px;overflow:auto}
@@ -449,7 +509,7 @@ const produtoAtual = {
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
 document.querySelector(".buy-btn").onclick = () => {
-    window.open('https://mpago.la/2BfrGV5', '_blank');
+    irParaCheckoutComCarregamento();
 };
 
 document.querySelector(".cart-btn").onclick = () => {
@@ -547,10 +607,22 @@ function renderizarCarrinho(){
             <span>Total:</span>
             <span>R$ ${total.toFixed(2).replace(".", ",")}</span>
         </div>
-        <button class="checkout-btn" onclick="window.open('https://mpago.la/2BfrGV5','_blank')">
+        <button class="checkout-btn" onclick="irParaCheckoutComCarregamento()">
             Finalizar compra
         </button>
     `;
+}
+
+
+function irParaCheckoutComCarregamento(){
+    fecharCarrinho();
+
+    const loading = document.getElementById("loading-checkout");
+    loading.style.display = "flex";
+
+    setTimeout(() => {
+        window.location.href = "https://mpago.la/2BfrGV5";
+    }, 2800);
 }
 
 function mostrarAvisoCarrinho(){
@@ -665,6 +737,16 @@ areaZoom.addEventListener("mouseleave", function(){
 });
 </script>
     
+
+<div class="loading-checkout" id="loading-checkout">
+  <div class="loading-card">
+    <div class="loading-spinner"></div>
+    <h3>Estamos preparando sua compra</h3>
+    <p>Aguarde alguns segundos enquanto encaminhamos você para o pagamento seguro.</p>
+    <div class="loading-bar"><span></span></div>
+  </div>
+</div>
+
 <div class="cart-modal" id="cart-modal">
   <div class="cart-box">
     <div class="cart-header">
